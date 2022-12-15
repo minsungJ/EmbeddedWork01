@@ -1,13 +1,13 @@
-all: Temperaturetestt
+all: accelMagGyrotestt
 
-Temperaturetestt : libMyPeri.a Temperaturetestt.c Temperature.h
-	arm-linux-gnueabi-gcc Temperaturetestt.c -l MyPeri -L. -o Temperaturetestt -lpthread
+accelMagGyrotestt : libMyPeri.a accelMagGyrotestt.c acc.h
+	arm-linux-gnueabi-gcc accelMagGyrotestt.c -l MyPeri -L. -o accelMagGyrotestt -lpthread
 
-libMyPeri.a : Temperature.o
-	arm-linux-gnueabi-ar rc libMyPeri.a Temperature.o
+libMyPeri.a : accelMagGyro.o
+	arm-linux-gnueabi-ar rc libMyPeri.a accelMagGyro.o
 
-Temperature.o: Temperature.h Temperature.c
-	arm-linux-gnueabi-gcc -c Temperature.c -o Temperature.o
+accelMagGyro.o: acc.h accelMagGyro.c
+	arm-linux-gnueabi-gcc -c accelMagGyro.c -o accelMagGyro.o
 
 rm : 
 	rm *.o
