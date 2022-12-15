@@ -1,18 +1,14 @@
-colorledtest.elf: colorledtest.o  libMyPeri.a
-	arm-linux-gnueabi-gcc -o cololedtest.elf colorledtest.c -lMyPeri -L.
+all: accelMagGyrotestt
 
-libMyPeri.a: textlcd.o fnd.o colorled.o
-	arm-linux-gnueabi-ar rc libMyPeri.a textlcd.o fnd.o colorled.o
+accelMagGyrotestt : libMyPeri.a accelMagGyrotestt.c acc.h
+	arm-linux-gnueabi-gcc accelMagGyrotestt.c -l MyPeri -L. -o accelMagGyrotestt -lpthread
 
-textlcd.o : textlcd.c textlcd.h
-	arm-linux-gnueabi-gcc -c textlcd.c -o textlcd.o
+libMyPeri.a : accelMagGyro.o
+	arm-linux-gnueabi-ar rc libMyPeri.a accelMagGyro.o
 
-fnd.o: fnd.c fnd.h
-	arm-linux-gnueabi-gcc -c fnd.c -o fnd.o
+accelMagGyro.o: acc.h accelMagGyro.c
+	arm-linux-gnueabi-gcc -c accelMagGyro.c -o accelMagGyro.o
 
-colorled.o : colorled.c colorled.h
-	arm-linux-gnueabi-gcc -c colorled.c -o colorled.o
-
-clean:
-	@rm -rf *.o libMyPeri.a
-
+rm : 
+	rm *.o
+	rm libMyPeri.a
