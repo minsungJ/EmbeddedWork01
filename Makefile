@@ -1,18 +1,14 @@
-colorledtest.elf: colorledtest.o  libMyPeri.a
-	arm-linux-gnueabi-gcc -o cololedtest.elf colorledtest.c -lMyPeri -L.
+all: Temperaturetestt
 
-libMyPeri.a: textlcd.o fnd.o colorled.o
-	arm-linux-gnueabi-ar rc libMyPeri.a textlcd.o fnd.o colorled.o
+Temperaturetestt : libMyPeri.a Temperaturetestt.c Temperature.h
+	arm-linux-gnueabi-gcc Temperaturetestt.c -l MyPeri -L. -o Temperaturetestt -lpthread
 
-textlcd.o : textlcd.c textlcd.h
-	arm-linux-gnueabi-gcc -c textlcd.c -o textlcd.o
+libMyPeri.a : Temperature.o
+	arm-linux-gnueabi-ar rc libMyPeri.a Temperature.o
 
-fnd.o: fnd.c fnd.h
-	arm-linux-gnueabi-gcc -c fnd.c -o fnd.o
+Temperature.o: Temperature.h Temperature.c
+	arm-linux-gnueabi-gcc -c Temperature.c -o Temperature.o
 
-colorled.o : colorled.c colorled.h
-	arm-linux-gnueabi-gcc -c colorled.c -o colorled.o
-
-clean:
-	@rm -rf *.o libMyPeri.a
-
+rm : 
+	rm *.o
+	rm libMyPeri.a
